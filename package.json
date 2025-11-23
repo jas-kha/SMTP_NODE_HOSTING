@@ -1,0 +1,32 @@
+{
+  "name": "smtp_node_hosting",
+  "version": "1.0.0",
+  "description": "How to work SMTP in Hosting (deployment)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jas-kha/SMTP_NODE_HOSTING.git"
+  },
+  "keywords": ["SMTP"],
+  "author": "Jas-Kha",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jas-kha/SMTP_NODE_HOSTING/issues"
+  },
+  "homepage": "https://github.com/jas-kha/SMTP_NODE_HOSTING#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemailer": "^7.0.10"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
