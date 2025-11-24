@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SMTP Sender</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    .card {
+      width: 360px;
+      padding: 20px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin: auto;
+      background: #1a1a1a;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0f6;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 10px;
+      color: #0f6;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>SMTP Email Sender</h2>
+
+    <input type="email" id="email" placeholder="Recipient Email" required>
+    <input type="text" id="subject" placeholder="Subject" required>
+    <textarea id="message" rows="5" placeholder="Message..." required></textarea>
+
+    <button id="sendBtn">Send</button>
+    <div class="loading" id="loading">Sending...</div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const btn = document.getElementById('sendBtn');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+
+    btn.addEventListener('click', async () => {
+      if (btn.disabled) return;     // double click block
+
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!email || !subject || !message) {
+        alert("Barcha maydonlarni to'ldiring");
+        return;
+      }
+
+      btn.disabled = true;
+      loading.style.display = "block";
+
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, subject, message })
+      });
+
+      const data = await res.json();
+
+      loading.style.display = "none";
+      btn.disabled = false;
+
+      if (data.ok) {
+        result.innerHTML = "<p style='color:#0f6'>Email muvaffaqiyatli yuborildi.</p>";
+      } else {
+        result.innerHTML = "<p style='color:red'>Xatolik: " + data.msg + "</p>";
+      }
+    });
+  </script>
+
+</body>
+
+</html>
